@@ -55,14 +55,13 @@ def main():
         
         print("----------------------------")
 
+    # store this matrix in a csv file
     with open('remainders.csv', 'w', newline='') as file:
         writer = csv.writer(file)
 
         for rem in remainders:
             print(rem)
             writer.writerow(rem)
-
-    # store this matrix in a csv file
 
 if __name__ == '__main__':
     main()
