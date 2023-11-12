@@ -131,6 +131,28 @@ def getBestPermutation(bit7, bit6, bit5, bit4, bit3, bit2, bit1, bit0, i=0):
 
     return fixedCombinations
 
+def getMostCommonCombinations(bit7, bit6, bit5, bit4, bit3, bit2, bit1, bit0):
+    # Get the best combinations
+    combinations = getBestPermutation(
+        bit7,
+        bit6,
+        bit5,
+        bit4,
+        bit3,
+        bit2,
+        bit1,
+        bit0
+    )
+
+    # Get the combinations of all combinations
+    all_combs = []
+    for c in combinations:
+        all_combs += generateAllPairs(c)
+
+    counter = Counter(all_combs)
+
+    return set([combs[0] for combs, count in counter.most_common()] + [combs[1] for combs, count in counter.most_common()])
+
 def main():
     remainders = []
     remainder_bits = [[],[],[],[],[],[],[],[]] # 0 -> r7, 1 -> r6, 2 -> r5, 3 -> r4, 4 -> r3, 5 -> r2, 6 -> r1, 7 -> r0
@@ -149,8 +171,8 @@ def main():
     for i in range(len(remainder_bits)):
         remainder_bits[i].reverse()
 
-    # Get the best combinations
-    combinations = getBestPermutation(
+    # Get the most common combinations for level 1
+    most_common = getMostCommonCombinations(
         remainder_bits[0],
         remainder_bits[1],
         remainder_bits[2],
@@ -161,17 +183,38 @@ def main():
         remainder_bits[7]
     )
 
-    # Get the combinations of all combinations
-    all_combs = []
-    for c in combinations:
-        all_combs += generateAllPairs(c)
+    print("----------------------------")
+    print("Try combining the following bits for level 1:")
+    for i in most_common:
+        print(i)
+    print("----------------------------")
 
-    counter = Counter(all_combs)
+    # --------LEVEL 2-------------
 
-    most_common = set([combs[0] for combs, count in counter.most_common()] + [combs[1] for combs, count in counter.most_common()])
+    # define the bits for level 2
+    level2_bit7 = [(13, 0), (5, 3), (7, 1), (12, 100)] # the 100 means that the bit is not used in level 1
+    level2_bit6 = [(6, 1), (15, 11), (4, 2), (5, 3), (13, 7)]
+    level2_bit5 = [(6, 1), (4, 2), (5, 3), (0, 10), (12, 14)]
+    level2_bit4 = [(15, 11), (4, 2), (9, 7), (12, 100)]
+    level2_bit3 = [(14, 8), (6, 1), (3, 11), (10, 100)]
+    level2_bit2 = [(13, 0), (9, 7), (2, 5), (10, 100)]
+    level2_bit1 = [(13, 0), (5, 3), (9, 7), (4, 6), (8, 15)]
+    level2_bit0 = [(13, 0), (6, 1), (14, 8), (4, 2)]
+
+    # Get the most common combinations for level 2
+    most_common = getMostCommonCombinations(
+        level2_bit7,
+        level2_bit6,
+        level2_bit5,
+        level2_bit4,
+        level2_bit3,
+        level2_bit2,
+        level2_bit1,
+        level2_bit0
+    )
 
     print("----------------------------")
-    print("Try combining the following bits:")
+    print("Try combining the following bits for level 2:")
     for i in most_common:
         print(i)
     print("----------------------------")
