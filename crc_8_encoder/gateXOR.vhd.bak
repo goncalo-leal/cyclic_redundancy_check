@@ -1,0 +1,12 @@
+LIBRARY ieee;
+USE ieee.std_logic_1164.all;
+
+ENTITY gateXOR2 IS
+  PORT (x0, x1: IN STD_LOGIC;
+        y: OUT STD_LOGIC);
+END gateXOR2;
+
+ARCHITECTURE logicFunction OF gateXOR2 IS
+BEGIN
+  y <= x0 XOR x1;
+END logicFunction;
